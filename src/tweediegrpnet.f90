@@ -166,6 +166,8 @@ idx,nbeta,alam,npass,jerr)
     INTEGER::end
     INTEGER::ii 
     INTEGER::jj  
+    INTEGER::pauli
+    INTEGER::paulj
     ! - - - local declarations - - -
     DOUBLE PRECISION:: tlam 
     INTEGER:: jx 
@@ -342,6 +344,13 @@ idx,nbeta,alam,npass,jerr)
                     ELSE
                         b(start:end)=0.0D0
                     ENDIF
+                    ! pshaq ---------------------------------------------------
+                    DO pauli=start,end 
+                        IF(b(pauli)<0) THEN
+                            b(pauli)=0
+                        ENDIF
+                    ENDDO
+                    ! pshaq ---------------------------------------------------
                     dd=b(start:end)-oldb
                     IF(any(abs(dd)>small)) THEN
                         dif=max(dif,dot_product(dd,dd))
@@ -393,6 +402,13 @@ idx,nbeta,alam,npass,jerr)
                         ELSE
                             b(start:end)=0.0D0
                         ENDIF
+                        ! pshaq ---------------------------------------------------
+                        DO paulj=start,end 
+                            IF(b(paulj)<0) THEN
+                                b(paulj)=0
+                            ENDIF
+                        ENDDO
+                        ! pshaq ---------------------------------------------------
                         dd=b(start:end)-oldb
                         IF(any(abs(dd)>small)) THEN
                             dif=max(dif,dot_product(dd,dd))
